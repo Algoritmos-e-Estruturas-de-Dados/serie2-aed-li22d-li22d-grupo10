@@ -3,52 +3,42 @@ package serie2.part1_2
 class IntArrayList: Iterable<Int> {
 
     private var list: Array<Int?>
-    var size: Int = 0
+
+    var init = 0
+    var end = 0
+    var size = 0
+    var offSet = 0
 
     constructor(size: Int) {
         list = arrayOfNulls<Int?>(size)
     }
 
-    private fun increaseCapacity() {
-        val newArray = arrayOfNulls<Int?>(2 * list.size)
-        // arraycopy(src, srcStart, dst, dstStart, size)
-        System.arraycopy(list, 0, newArray, 0, size)
-        list = newArray
-
-    }
-
     fun append(x: Int): Boolean {
-        var counter = size
-        if (x in list) return false
-        if (size == list.size) {
-           increaseCapacity()
-       }
-            list[size++] = x
-            counter++
-            return true
+        if (size == list.size) return false
+
+        list[end] = x - offSet
+        end = (end + 1) % list.size // Garante comportamento circular
+        size++
+        return true
     }
 
     fun get(n: Int): Int?  {
-        return if (n in list.indices) list[n] else null
+        if (n < 0 || n >= size) return null
+        val idx = (init + n) % list.size
+        return list[idx]?.plus(offSet)
     }
 
     fun addToAll(x: Int) {
-        for (i in 0 until size) {
-            if (list[i] != null)
-                list[i] = list[i]!! + x
-        }
+        offSet += x
     }
 
     fun remove(): Boolean {
-        if (list.isEmpty()) return false
+        if (size == 0) return false
         else {
-            list[0] = null
+            list[init] = null
+            init = (init + 1) % list.size
             size--
-            if (size < 0) return false
-            else {
-                System.arraycopy(list, 0, list, 0, size)
-                return true
-            }
+            return true
         }
     }
 
@@ -63,11 +53,9 @@ fun main() {
     println(list.append(4))
     println(list.get(0))
     println(list.get(1))
+    println(list.addToAll(100))
     println(list.get(0))
     println(list.get(1))
-    println(list.addToAll(10))
-    println(list.get(0))
-    println(list.get(1))
-    println(list.remove())
-    println(list.get(0))
+    println(list.append(6))
+    println(list.get(2))
 }
