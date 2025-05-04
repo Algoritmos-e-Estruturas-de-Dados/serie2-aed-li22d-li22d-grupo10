@@ -7,11 +7,11 @@ package serie2.part1_2
 
 fun minimum(maxHeap: Array<Int>, heapSize: Int): Int {
 
-    val firtLeaf = heapSize / 2
-    var min = maxHeap[firtLeaf]
+    val firstLeaf = heapSize / 2
+    var min = maxHeap[firstLeaf]
 
-    for(i in firtLeaf + 1 until heapSize) {
-        if(maxHeap[i] < min) {
+    for(i in firstLeaf + 1 until heapSize) {
+        if (maxHeap[i] < min) {
             min = maxHeap[i]
         }
     }

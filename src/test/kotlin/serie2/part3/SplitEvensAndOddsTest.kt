@@ -47,7 +47,7 @@ class SplitEvensAndOddsTest {
     private fun testSequence( sequence: List<Int>,  oddIndex: Int ){
         var sentinel= sequence.toLinkedList() // create doubly linked list with sentinel
         splitEvensAndOdds(sentinel)
-        val r= sentinel.toList()
+        val r = sentinel.toList()
         for (i in 0 ..< oddIndex){          // check even numbers
             assertTrue((r[i] % 2) == 0, "Expected even number at index $i, but got ${r[i]}")
         }
