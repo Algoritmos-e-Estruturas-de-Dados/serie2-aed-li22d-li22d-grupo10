@@ -1,7 +1,6 @@
 package serie2.part1_2
 
-class IntArrayList: Iterable<Int> {
-
+class IntArrayList : Iterable<Int> {
     private var list: Array<Int?>
 
     var init = 0
@@ -22,7 +21,7 @@ class IntArrayList: Iterable<Int> {
         return true
     }
 
-    fun get(n: Int): Int?  {
+    fun get(n: Int): Int? {
         if (n < 0 || n >= size) return null
         val idx = (init + n) % list.size
         return list[idx]?.plus(offSet)
@@ -33,8 +32,9 @@ class IntArrayList: Iterable<Int> {
     }
 
     fun remove(): Boolean {
-        if (size == 0) return false
-        else {
+        if (size == 0) {
+            return false
+        } else {
             list[init] = null
             init = (init + 1) % list.size
             size--
