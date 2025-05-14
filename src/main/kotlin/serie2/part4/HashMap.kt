@@ -43,7 +43,6 @@ class HashMap<K, V>(
         key: K,
         value: V,
     ): V? {
-        // Verificar se precisamos expandir a tabela
         if (size.toFloat() / capacity >= loadFactor) {
             expand()
         }
@@ -77,7 +76,6 @@ class HashMap<K, V>(
 
                 curr.next = newTable[newIdx]
                 newTable[newIdx] = curr
-
                 curr = nextNode
             }
         }
@@ -87,7 +85,7 @@ class HashMap<K, V>(
 
     override fun iterator(): Iterator<MutableMap.MutableEntry<K, V>> {
         return object : Iterator<MutableMap.MutableEntry<K, V>> {
-            private var bucketIndex = 0
+            private var tableIndex = 0
             private var currentNode: HashNode<K, V>? = null
 
             init {
@@ -99,17 +97,14 @@ class HashMap<K, V>(
                     currentNode = currentNode?.next
                     return
                 }
-
-                bucketIndex++
-                while (bucketIndex < capacity) {
-                    if (table[bucketIndex] != null) {
-                        currentNode = table[bucketIndex]
+                tableIndex++
+                while (tableIndex < capacity) {
+                    if (table[tableIndex] != null) {
+                        currentNode = table[tableIndex]
                         return
                     }
-                    bucketIndex++
+                    tableIndex++
                 }
-
-                // Se chegamos aqui, não há mais elementos
                 currentNode = null
             }
 
