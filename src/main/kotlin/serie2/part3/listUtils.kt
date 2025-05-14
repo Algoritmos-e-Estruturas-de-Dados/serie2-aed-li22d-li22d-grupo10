@@ -1,5 +1,3 @@
-@file:Suppress("ktlint:standard:filename")
-
 package serie2.part3
 
 class Node<T>(
