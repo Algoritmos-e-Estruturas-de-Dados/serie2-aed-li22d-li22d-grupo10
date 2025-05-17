@@ -67,12 +67,13 @@ class HashMap<K, V>(
     private fun expand() {
         val newCapacity = capacity * 2
         val newTable = arrayOfNulls<HashNode<K, V>?>(newCapacity)
+
         for (i in table.indices) {
             var curr = table[i]
             while (curr != null) {
                 val nextNode = curr.next
-                val newIdx = curr.key.hashCode() % newCapacity
-                if (newIdx < 0) newIdx + newCapacity
+                var newIdx = curr.key.hashCode() % newCapacity
+                if (newIdx < 0) newIdx += newCapacity
 
                 curr.next = newTable[newIdx]
                 newTable[newIdx] = curr
